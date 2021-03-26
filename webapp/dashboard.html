@@ -16,10 +16,36 @@
 <body>
 
     <div class="container min-vh-100">
-        <h1>Welcome, <span id="user_email"></span></h1>
+        <div class="d-flex justify-content-center pt-1">
+            <h1 class="fw-bold">Welcome, <span id="user_email"></span></h1>
+        </div>
+        
+        <div class="d-flex justify-content-center pt-5">
+            <h2 class="fw-light"><a href="#">Register New Patient</a></h2>
+        </div>
+        
+        <div class="d-flex justify-content-center pt-5">
+            <h2 class="fw-light"><a href="#">Add Appointment</a></h2>
+        </div>
+        
+        <div class="d-flex justify-content-center pt-5">
+            <h2 class="fw-light"><a href="#">Edit Existing Appointment</a></h2>
+        </div>
+        
+        <div class="d-flex justify-content-center pt-5">
+            <!-- This should likely be a search bar to look up patient or click on patient in schedule to view profile -->
+            <h2 class="fw-light"><a href="#">Look Up Patient Forms</a></h2>
+        </div>
+        
+        <div class="d-flex justify-content-center pt-5">
+            <!-- Placeholder for Schedule / List of people scheduled that are checked in or not yet checked in -->
+        </div>
     </div>
+    
+    
+    
 
-    <!-- Initialize Firebase -->
+    <!-- Initialize Firebase Scripts -->
     <script src="/__/firebase/8.2.10/firebase-app.js"></script>
     <script src="/__/firebase/8.2.10/firebase-auth.js"></script>
     <script src="/__/firebase/8.2.10/firebase-analytics.js"></script>
