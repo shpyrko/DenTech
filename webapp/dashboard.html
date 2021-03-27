@@ -11,6 +11,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $("#schedule").load("schedule.html"); 
+        });
+    </script>
 </head>
 
 <body>
@@ -37,7 +42,7 @@
             <h2 class="fw-light"><a href="#">Look Up Patient Forms</a></h2>
         </div>
         
-        <div class="d-flex justify-content-center pt-5">
+        <div class="d-flex justify-content-center pt-5" id="schedule">
             <!-- Placeholder for Schedule / List of people scheduled that are checked in or not yet checked in -->
         </div>
     </div>
@@ -58,6 +63,8 @@
                 document.getElementById("user_email").innerHTML = user.email
             }
         });
+        
+
 
     </script>
     
