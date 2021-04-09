@@ -29,15 +29,5 @@ $(document).ready(function(){
                 });
             });
         });
-        
-     /*  $.post("http://127.0.0.1:5000/webapp/loginAuth", {
-           username: username_input,
-           password: password_input
-       },
-        function(data){
-           window.location.replace(data);
-       }),
-           "text"
-    });*/
 
 });
