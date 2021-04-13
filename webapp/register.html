@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
     <head>
         <!-- Required Bootstrap meta tags -->
@@ -6,10 +8,12 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     </head>
+    
     <body>
         <form method="POST" action="js/register.js">
-            <!-- Fields for registration: First name, Last name, email, -->
+            <!-- Fields for registration: First name, Last name, email, address, phone number -->
             <input type="text" placeholder="First Name" id="first_name" required />
             <input type="text" placeholder="Last Name" id="last_name" required />
             <input type="email" placeholder="Email Address" id="email_address" required />
@@ -20,13 +24,12 @@
         </form>
         
             <!-- Initialize Firebase Scripts -->
-    <script src="/__/firebase/8.2.10/firebase-app.js"></script>
-    <script src="/__/firebase/8.2.10/firebase-auth.js"></script>
-    <script src="/__/firebase/8.2.10/firebase-analytics.js"></script>
-    <script src="/__/firebase/8.3.2/firebase-firestore.js"></script>
-    <script src="/__/firebase/8.3.2/firebase.js"></script>
-    <script src="/__/firebase/init.js"></script>
-    <script src="js/register.js"></script>
+        <script src="/__/firebase/8.2.10/firebase-app.js"></script>
+        <script src="/__/firebase/8.2.10/firebase-auth.js"></script>
+        <script src="/__/firebase/8.2.10/firebase-analytics.js"></script>
+        <script src="/__/firebase/8.3.2/firebase-firestore.js"></script>
+        <script src="/__/firebase/init.js"></script>
+        <script src="js/register.js"></script>
     </body>
     
 </html>
