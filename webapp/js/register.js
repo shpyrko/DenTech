@@ -10,14 +10,14 @@ $(document).ready(function() {
 
     $("#register").click(function() {
         var db = firebase.firestore();
-        // Add verification to add id that doesn't exist yet
+
         var first_name = document.getElementById("first_name").value;
         var last_name = document.getElementById("last_name").value;
         var email = document.getElementById("email_address").value;
         var address = document.getElementById("home_address").value;
         var phone_no = document.getElementById("phone_no").value;
         
-        var new_patient = db.collection("patients").add({
+        db.collection("patients").add({
             email: email
         }).then((docRef) => {
             var id = docRef.id;
@@ -39,25 +39,6 @@ $(document).ready(function() {
 
             window.location = "dashboard.html";
         });
-//        
-//        db.collection("patients").doc(new_patient.id).collection("forms").add("basic_info").set({
-//            address: address,
-//            first_name: first_name,
-//            last_name: last_name,
-//            phone: phone_no
-//        });
-//        
-//        //console.log(conditions);
-//        //new_patient.collection("forms").doc("conditions").set(conditions);
-//        db.collection("patients").doc(new_patient.id).collection("forms").doc("conditions").add({
-//            medications: ""
-//        });
-//    
-//        db.collection("patients").doc(new_patient.id).collection("forms").doc("insurance").add({
-//           company: "" 
-//        });
-//        
-//        window.location = "dashboard.html";
         
     });
     
