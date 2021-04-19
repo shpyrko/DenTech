@@ -34,9 +34,7 @@ $(document).ready(function() {
             docRef.collection("forms").doc("conditions").set(conditions);
 
             docRef.collection("forms").doc("insurance").set({
-               company: "",
-               memberID: "",
-               group_code: ""
+               company: "" 
             });
 
             window.location = "dashboard.html";
