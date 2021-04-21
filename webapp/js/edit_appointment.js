@@ -27,7 +27,7 @@ function get_time(datetime) {
 
 async function fill_form(patient_id, apppointment_id) {
     var db = firebase.firestore();
-    const patient_doc = db.collection("patients").doc(patient_id)
+    const patient_doc = db.collection("patients").doc(patient_id);
     const basic_info = patient_doc.collection("forms").doc("basic_info");
     const patient_data = await basic_info.get();
     const first_name = patient_data.get("first_name");
@@ -47,8 +47,6 @@ async function fill_form(patient_id, apppointment_id) {
     document.getElementById("phone_no").setAttribute('value', phone_no);
     document.getElementById("date").setAttribute('value', date);
     document.getElementById("time").setAttribute('value', time);
-
-
 
 }
 
