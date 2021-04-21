@@ -2,19 +2,29 @@ async function add_appointment(first_name, last_name, phone_no, appointment_date
     db = firebase.firestore();
     const patient_snapshot = await db.collection("patients").get();
     console.log(patient_snapshot);
-    const all_patients = [];
+    var patient_data = "";
     
     for (var patient_doc of patient_snapshot.docs) {
         const patient_info = await patient_doc.ref.collection("forms").doc("basic_info").get();
         var patient = patient_info.data();
         console.log(patient);
-        all_patients.push(patient_info);
         if (first_name == patient.first_name && last_name == patient.last_name && phone_no == patient.phone) {
             await patient_doc.ref.collection("appointments").add({
                 checkedIn: false,
                 date: appointment_datetime
-            });
-            return Promise.all(all_patients);
+            }).then((docRef) => {
+                var patientEmail = patient_doc.data().email
+                console.log(patientEmail)
+                var appointmentID = docRef.id
+                patient_data = JSON.stringify(
+                    {
+                        email: patientEmail,
+                        appointmentID: appointmentID
+                    }
+                );
+            })
+            
+            return Promise.resolve(patient_data);
         }
     }
     return undefined;
@@ -40,7 +50,16 @@ $(document).ready(function() {
                 window.alert("Patient not found");
             }
             else {
-                window.location = "dashboard.html";
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://35.212.90.92/sendEmail", true)
+                xhr.setRequestHeader('Content-Type', 'application/json')
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        window.location = "dashboard.html";
+                    }
+                }
+                xhr.send(result)
+                
             }
         });        
         
