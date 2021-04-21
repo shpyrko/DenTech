@@ -1,24 +1,23 @@
-function add_appointment(first_name, last_name, phone_no, appointment_datetime) {
+async function add_appointment(first_name, last_name, phone_no, appointment_datetime) {
     db = firebase.firestore();
-    var patient_snapshot = db.collection("patients").get().then((snapshot) => {
-        return snapshot.docs;
-    });
-    
+    const patient_snapshot = await db.collection("patients").get();
     console.log(patient_snapshot);
+    const all_patients = [];
+    
     for (var patient_doc of patient_snapshot.docs) {
-        patient_doc.ref.collection("forms").doc("basic_info").get().then((patient_info) => {
-            var patient = patient_info.data();
-            console.log(patient);
-            if (first_name == patient.first_name && last_name == patient.last_name && phone_no == patient.phone) {
-                patient_doc.ref.collection("appointments").add({
-                    checkedIn: false,
-                    date: appointment_datetime
-                });
-                return true;  
-            }
-        });
+        const patient_info = await patient_doc.ref.collection("forms").doc("basic_info").get();
+        var patient = patient_info.data();
+        console.log(patient);
+        all_patients.push(patient_info);
+        if (first_name == patient.first_name && last_name == patient.last_name && phone_no == patient.phone) {
+            patient_doc.ref.collection("appointments").add({
+                checkedIn: false,
+                date: appointment_datetime
+            });
+            return Promise.all(all_patients);
+        }
     }
-    return false;
+    return undefined;
 }
 
 $(document).ready(function() {
@@ -35,15 +34,15 @@ $(document).ready(function() {
         var time = document.getElementById("time").value;
         var appointment_datetime = new Date(date + " " + time);
         
-        var found = add_appointment(first_name, last_name, phone_no, appointment_datetime);
-        console.log(found);
-        
-        if (found) {
-            window.location = "dashboard.html";
-        }
-        else {
-            window.alert("Patient not found");
-        }
+        const found = add_appointment(first_name, last_name, phone_no, appointment_datetime).then(result => {
+            console.log(result);
+            if (result == undefined) {
+                window.alert("Patient not found");
+            }
+            else {
+                window.location = "dashboard.html";
+            }
+        });        
         
     });
     
