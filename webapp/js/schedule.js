@@ -27,36 +27,64 @@ function get_time(datetime) {
   });
 }
 
-$(document).ready(function() {
+function compare(a, b) {
+    if (a.time_seconds < b.time_seconds) {
+        return -1;
+    }
+    if (a.time_seconds > b.time_seconds) {
+        return 1
+    }
+    return 0;
+}
+
+async function get_today_schedule() {
     var today = new Date();
-    var full_appointment_date = new Date();
-    var rowspan = 0;
+    var full_appointment_date = new Date();    
+    var patients_today = [];
     
     var db = firebase.firestore();
-    db.collection("patients").get().then((patient_snapshot) => {
-        patient_snapshot.forEach((patient_doc) => {
-            patient_doc.ref.collection("appointments").get().then((appointment_snapshot) => {
-                appointment_snapshot.forEach((appointment_doc) => {
-                    full_appointment_date = new Date(appointment_doc.get("date").seconds * 1000);
-                    var time = get_time(full_appointment_date);
-                    var simple_appointment_date = get_date_no_time(full_appointment_date);
-                    var simple_today_date = get_date_no_time(today);
-                    if (simple_appointment_date.valueOf() == simple_today_date.valueOf()) {
-                        var id = patient_doc.id;
-                        var email = patient_doc.get("email");
-                        var checked_in = '"text-danger"';
-                        if (patient_doc.get("checkedIn")) {
-                            checked_in = '"text-success"';
-                        }
-                        var patient_info = {"id": id, "email": email, "time": time};
-                        document.getElementById("appointments").insertAdjacentHTML('beforeend', '<tr> <td class="agenda-time"><p class=' + checked_in + '>' + time + '</p></td> <td class="agenda-events"> <div class="agenda-event"><p class=' + checked_in + '>' + email + '</p></div></td></tr>');
-                    }
-                }); 
-            });  
-        });
-    });
+    var patient_snapshot = await db.collection("patients").get();
+    for (var patient_doc of patient_snapshot.docs) {
+        var appointment_snapshot = await patient_doc.ref.collection("appointments").get();
+        for (var appointment_doc of appointment_snapshot.docs) {
+            full_appointment_date = new Date(appointment_doc.get("date").seconds * 1000);
+            var date_in_seconds = appointment_doc.get("date").seconds;
+            var time = get_time(full_appointment_date);
+            var simple_appointment_date = get_date_no_time(full_appointment_date);
+            var simple_today_date = get_date_no_time(today);
+            if (simple_appointment_date.valueOf() == simple_today_date.valueOf()) {
+                var id = patient_doc.id;
+                var email = patient_doc.get("email");
+                var checked_in = "text-danger";
+                if (appointment_doc.get("checkedIn")) {
+                    console.log(appointment_doc.get("checkedIn"));
+                    checked_in = "text-success";
+                }
+                var patient_info = {"id": id, "email": email, "time_seconds": date_in_seconds, "checked_in": checked_in, "time": time};
+                patients_today.push(patient_info);
+            }
+        } 
+    }
     
-    document.getElementById("appointments").insertAdjacentHTML('afterbegin', '<td class="agenda-date" class="active" rowspan="' + rowspan.toString() + '"> <div class="dayofweek">' + get_weekday() + '</div> <div class="shortdate text-muted">' + today.toDateString() + '</div></td>');
+    return patients_today;
+}
+
+$(document).ready(function() {
+    
+    get_today_schedule().then(patients_today => {
+        patients_today.sort(compare);
+        var rowspan = patients_today.length + 1;
+        
+        document.getElementById("appointments").insertAdjacentHTML('afterbegin', '<td class="agenda-date" class="active" rowspan="' + rowspan.toString() + '"> <div class="dayofweek">' + get_weekday() + '</div> <div class="shortdate text-muted">' + new Date().toDateString() + '</div></td>');
+        
+        for (var patient in patients_today) {
+            document.getElementById("appointments").insertAdjacentHTML('beforeend', '<tr> <td class="agenda-time"><p class="' + patients_today[patient]["checked_in"] + '">' + patients_today[patient]["time"] + '</p></td> <td class="agenda-events"> <div class="agenda-event"><a href="patient_profile.html?patient_id=' + patients_today[patient]["id"] + '"><p class="' + patients_today[patient]["checked_in"] + '">' + patients_today[patient]["email"] + '</p></a></div></td></tr>');
+        }
+        
+    });
+
+    
+    
     
     // Add sorting for time in schedule
 
