@@ -10,7 +10,7 @@ async function add_appointment(first_name, last_name, phone_no, appointment_date
         console.log(patient);
         all_patients.push(patient_info);
         if (first_name == patient.first_name && last_name == patient.last_name && phone_no == patient.phone) {
-            patient_doc.ref.collection("appointments").add({
+            await patient_doc.ref.collection("appointments").add({
                 checkedIn: false,
                 date: appointment_datetime
             });

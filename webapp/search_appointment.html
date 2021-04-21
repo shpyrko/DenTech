@@ -12,24 +12,21 @@
     </head>
     
     <body>
-        <form method="POST" action="js/register.js">
-            <!-- Fields for registration: First name, Last name, email, address, phone number -->
+        <form method="POST" action="js/search_appointment.js">
             <input type="text" placeholder="First Name" id="first_name" required />
             <input type="text" placeholder="Last Name" id="last_name" required />
-            <input type="email" placeholder="Email Address" id="email_address" required />
-            <input type="text" placeholder="Home Address" id="home_address" required />
-            <input type="text" placeholder="Phone Number" id="phone_no" required />
+            <input type="email" placeholder="Phone Number" id="phone_no" required />
 
-            <input type="button" id="register" class="btn btn-primary" value="Register Patient"/>
+            <input type="button" id="next_appointment" class="btn btn-primary" value="Find Next Appointment"/>
         </form>
         
-            <!-- Initialize Firebase Scripts -->
+        <!-- Initialize Firebase Scripts -->
         <script src="/__/firebase/8.2.10/firebase-app.js"></script>
         <script src="/__/firebase/8.2.10/firebase-auth.js"></script>
         <script src="/__/firebase/8.2.10/firebase-analytics.js"></script>
         <script src="/__/firebase/8.3.2/firebase-firestore.js"></script>
         <script src="/__/firebase/init.js"></script>
-        <script src="js/register.js"></script>
+        <script src="js/search_appointment.js"></script>
     </body>
     
 </html>

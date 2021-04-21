@@ -12,15 +12,23 @@
     </head>
     
     <body>
-        <form method="POST" action="js/edit_appointment.js">
-            <input type="text" placeholder="First Name" id="first_name" required />
-            <input type="text" placeholder="Last Name" id="last_name" required />
-            <input type="email" placeholder="Phone Number" id="phone_no" required />
-
-            <input type="button" id="next_appointment" value="Find Next Appointment"/>
+        <form id="appointment_form" method="POST" action="js/edit_appointment.js">
+            <input type="text" placeholder="First Name" id="first_name" disabled />
+            <input type="text" placeholder="Last Name" id="last_name" disabled />
+            <input type="email" placeholder="Phone Number" id="phone_no" disabled />
+            
+            <label for="date">Appointment Date: </label>
+            <input type="date" id="date" required />
+            
+            <label for="date">Appointment Time: </label>
+            <input type="time" id="time" required />
+            
+            
+            <input type="button" id="edit_appointment" class="btn btn-primary" value="Edit Appointment"/>
+            <input type="button" id="delete_appointment" class="btn btn-danger" value="Delete Appointment">
         </form>
         
-        <!-- Initialize Firebase Scripts -->
+            <!-- Initialize Firebase Scripts -->
         <script src="/__/firebase/8.2.10/firebase-app.js"></script>
         <script src="/__/firebase/8.2.10/firebase-auth.js"></script>
         <script src="/__/firebase/8.2.10/firebase-analytics.js"></script>
