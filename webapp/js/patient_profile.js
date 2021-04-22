@@ -63,6 +63,9 @@ $(document).ready(function() {
     const params = new URLSearchParams(query_string); 
     const patient_id = params.get("patient_id"); 
     
+    document.getElementById("update_info").setAttribute('href', 'update_info.html?patient_id=' + patient_id);
+
+    
     get_patient(patient_id).then(patient_info => {    
         // Insert patient info to html
         for (var item in patient_info) {
@@ -79,7 +82,9 @@ $(document).ready(function() {
     }).catch(error => {
         console.log(error);
     });
-
     
+    $("#update_info").click(function() {
+       window.location = "update_info.html?patient_id=" + patient_id; 
+    });
     
 });
