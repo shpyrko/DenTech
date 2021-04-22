@@ -38,35 +38,39 @@ function compare(a, b) {
 }
 
 async function get_today_schedule() {
-    var today = new Date();
-    var full_appointment_date = new Date();    
-    var patients_today = [];
-    
-    var db = firebase.firestore();
-    var patient_snapshot = await db.collection("patients").get();
-    for (var patient_doc of patient_snapshot.docs) {
-        var appointment_snapshot = await patient_doc.ref.collection("appointments").get();
-        for (var appointment_doc of appointment_snapshot.docs) {
-            full_appointment_date = new Date(appointment_doc.get("date").seconds * 1000);
-            var date_in_seconds = appointment_doc.get("date").seconds;
-            var time = get_time(full_appointment_date);
-            var simple_appointment_date = get_date_no_time(full_appointment_date);
-            var simple_today_date = get_date_no_time(today);
-            if (simple_appointment_date.valueOf() == simple_today_date.valueOf()) {
-                var id = patient_doc.id;
-                var email = patient_doc.get("email");
-                var checked_in = "text-danger";
-                if (appointment_doc.get("checkedIn")) {
-                    console.log(appointment_doc.get("checkedIn"));
-                    checked_in = "text-success";
+    try {
+        var today = new Date();
+        var full_appointment_date = new Date();    
+        var patients_today = [];
+
+        var db = firebase.firestore();
+        var patient_snapshot = await db.collection("patients").get();
+        for (var patient_doc of patient_snapshot.docs) {
+            var appointment_snapshot = await patient_doc.ref.collection("appointments").get();
+            for (var appointment_doc of appointment_snapshot.docs) {
+                full_appointment_date = new Date(appointment_doc.get("date").seconds * 1000);
+                var date_in_seconds = appointment_doc.get("date").seconds;
+                var time = get_time(full_appointment_date);
+                var simple_appointment_date = get_date_no_time(full_appointment_date);
+                var simple_today_date = get_date_no_time(today);
+                if (simple_appointment_date.valueOf() == simple_today_date.valueOf()) {
+                    var id = patient_doc.id;
+                    var email = patient_doc.get("email");
+                    var checked_in = "text-danger";
+                    if (appointment_doc.get("checkedIn")) {
+                        checked_in = "text-success";
+                    }
+                    var patient_info = {"id": id, "email": email, "time_seconds": date_in_seconds, "checked_in": checked_in, "time": time};
+                    patients_today.push(patient_info);
                 }
-                var patient_info = {"id": id, "email": email, "time_seconds": date_in_seconds, "checked_in": checked_in, "time": time};
-                patients_today.push(patient_info);
-            }
-        } 
+            } 
+        }
+
+        return patients_today;
+        
+    } catch (error) {
+        console.log(error);
     }
-    
-    return patients_today;
 }
 
 $(document).ready(function() {
@@ -82,12 +86,7 @@ $(document).ready(function() {
         }
         
     });
-
     
-    
-    
-    // Add sorting for time in schedule
-
 });
 
 

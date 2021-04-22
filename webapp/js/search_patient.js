@@ -1,18 +1,22 @@
 async function search_appointment(first_name, last_name, phone_no) {
-    db = firebase.firestore();
-    const patient_snapshot = await db.collection("patients").get();
-    const all_patients = [];
-    
-    for (var patient_doc of patient_snapshot.docs) {
-        const patient_info = await patient_doc.ref.collection("forms").doc("basic_info").get();
-        var patient = patient_info.data();
-        console.log(patient);
-        
-        if (first_name == patient.first_name && last_name == patient.last_name && phone_no == patient.phone) {
-            return patient_doc.id;
+    try {
+        db = firebase.firestore();
+        const patient_snapshot = await db.collection("patients").get();
+        const all_patients = [];
+
+        for (var patient_doc of patient_snapshot.docs) {
+            const patient_info = await patient_doc.ref.collection("forms").doc("basic_info").get();
+            var patient = patient_info.data();
+
+            if (first_name == patient.first_name && last_name == patient.last_name && phone_no == patient.phone) {
+                return patient_doc.id;
+            }
         }
+        return undefined;
+        
+    } catch (error) {
+        console.log(error);
     }
-    return undefined;
 }
 
 $(document).ready(function() {
@@ -24,7 +28,7 @@ $(document).ready(function() {
         
         search_appointment(first_name, last_name, phone_no).then(patient_id => {
             if (patient_id == undefined) {
-                window.alert("Patient or appointment not found");
+                window.alert("Patient not found");
             }
             else {
                 window.location = "/patient_profile.html?patient_id=" + patient_id;

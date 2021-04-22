@@ -1,33 +1,35 @@
 async function add_appointment(first_name, last_name, phone_no, appointment_datetime) {
-    db = firebase.firestore();
-    const patient_snapshot = await db.collection("patients").get();
-    console.log(patient_snapshot);
-    var patient_data = "";
-    
-    for (var patient_doc of patient_snapshot.docs) {
-        const patient_info = await patient_doc.ref.collection("forms").doc("basic_info").get();
-        var patient = patient_info.data();
-        console.log(patient);
-        if (first_name == patient.first_name && last_name == patient.last_name && phone_no == patient.phone) {
-            await patient_doc.ref.collection("appointments").add({
-                checkedIn: false,
-                date: appointment_datetime
-            }).then((docRef) => {
-                var patientEmail = patient_doc.data().email
-                console.log(patientEmail)
-                var appointmentID = docRef.id
-                patient_data = JSON.stringify(
-                    {
-                        email: patientEmail,
-                        appointmentID: appointmentID
-                    }
-                );
-            })
-            
-            return Promise.resolve(patient_data);
+    try {
+        db = firebase.firestore();
+        const patient_snapshot = await db.collection("patients").get();
+        var patient_data = "";
+
+        for (var patient_doc of patient_snapshot.docs) {
+            const patient_info = await patient_doc.ref.collection("forms").doc("basic_info").get();
+            var patient = patient_info.data();
+            if (first_name == patient.first_name && last_name == patient.last_name && phone_no == patient.phone) {
+                await patient_doc.ref.collection("appointments").add({
+                    checkedIn: false,
+                    date: appointment_datetime
+                }).then((docRef) => {
+                    var patientEmail = patient_doc.data().email;
+                    var appointmentID = docRef.id;
+                    patient_data = JSON.stringify(
+                        {
+                            email: patientEmail,
+                            appointmentID: appointmentID
+                        }
+                    );
+                })
+
+                return Promise.resolve(patient_data);
+            }
         }
+        return undefined;
+        
+    } catch (error) {
+        console.log(error);
     }
-    return undefined;
 }
 
 $(document).ready(function() {
@@ -45,7 +47,6 @@ $(document).ready(function() {
         var appointment_datetime = new Date(date + " " + time);
         
         const found = add_appointment(first_name, last_name, phone_no, appointment_datetime).then(result => {
-            console.log(result);
             if (result == undefined) {
                 window.alert("Patient not found");
             }

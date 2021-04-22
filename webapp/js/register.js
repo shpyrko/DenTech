@@ -3,14 +3,16 @@ var conditions_list = ["AIDS/HIV", "Anemia", "Arthritis", "Asthma", "Blood Disea
 $(document).ready(function() {
 
     var conditions = {Medications: ""};
-
+    
+    // Sets empty forms
     for (let condition of conditions_list) {
         conditions[condition] = false;
     }
 
     $("#register").click(function() {
         var db = firebase.firestore();
-
+        
+        // Get basic info
         var first_name = document.getElementById("first_name").value;
         var last_name = document.getElementById("last_name").value;
         var email = document.getElementById("email_address").value;
@@ -21,7 +23,6 @@ $(document).ready(function() {
             email: email
         }).then((docRef) => {
             var id = docRef.id;
-            console.log(id);
             
             docRef.collection("forms").doc("basic_info").set({
                 address: address,
@@ -30,7 +31,6 @@ $(document).ready(function() {
                 phone: phone_no
             });
             
-            console.log(conditions);
             docRef.collection("forms").doc("conditions").set(conditions);
 
             docRef.collection("forms").doc("insurance").set({
@@ -40,6 +40,8 @@ $(document).ready(function() {
             });
 
             window.location = "dashboard.html";
+        }).catch(error => {
+            console.log(error);
         });
         
     });
