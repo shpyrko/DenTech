@@ -12,20 +12,37 @@
     </head>
     
     <body>
-        <form method="POST" action="js/add_appointment.js">
-            <input type="text" placeholder="First Name" id="first_name" required />
-            <input type="text" placeholder="Last Name" id="last_name" required />
-            <input type="email" placeholder="Phone Number" id="phone_no" required />
-            
-            <label for="date">Appointment Date: </label>
-            <input type="date" id="date" required />
-            
-            <label for="date">Appointment Time: </label>
-            <input type="time" id="time" required />
-            
-
-            <input type="button" id="add_appointment" class="btn btn-primary" value="Add Appointment"/>
-        </form>
+        
+        <div class="container min-vh-100 pt-3">
+            <div class="d-flex justify-content-center">
+                <form method="POST" action="js/add_appointment.js">
+                    <div class="col">
+                        <input type="text" placeholder="First Name" id="first_name" required />
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <input type="text" placeholder="Last Name" id="last_name" required />
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <input type="text" placeholder="Phone Number" id="phone_no" required />
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <label for="date">Appointment Date: </label>
+                        <input type="date" id="date" required />
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <label for="date">Appointment Time: </label>
+                        <input type="time" id="time" required />
+                    </div>
+                    
+                    <div class=" pt-4">
+                        <input type="button" id="add_appointment" class="btn btn-primary" value="Add Appointment"/>
+                    </div>
+                </form>
+            </div>
         
             <!-- Initialize Firebase Scripts -->
         <script src="/__/firebase/8.2.10/firebase-app.js"></script>

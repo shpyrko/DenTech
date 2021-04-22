@@ -12,13 +12,28 @@
     </head>
     
     <body>
-        <form method="POST" action="js/search_appointment.js">
-            <input type="text" placeholder="First Name" id="first_name" required />
-            <input type="text" placeholder="Last Name" id="last_name" required />
-            <input type="email" placeholder="Phone Number" id="phone_no" required />
+        
+        <div class="container min-vh-100 pt-3">
+            <div class="d-flex justify-content-center">
+                <form method="POST" action="js/search_appointment.js">
+                    <div class="col">
+                        <input type="text" placeholder="First Name" id="first_name" required />
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <input type="text" placeholder="Last Name" id="last_name" required />
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <input type="text" placeholder="Phone Number" id="phone_no" required />
+                    </div>
 
-            <input type="button" id="next_appointment" class="btn btn-primary" value="Find Next Appointment"/>
-        </form>
+                    <div class="col pt-4">
+                        <input type="button" id="next_appointment" class="btn btn-primary" value="Find Patient's Appointment"/>
+                    </div>
+                </form>
+            </div>
+        </div>
         
         <!-- Initialize Firebase Scripts -->
         <script src="/__/firebase/8.2.10/firebase-app.js"></script>

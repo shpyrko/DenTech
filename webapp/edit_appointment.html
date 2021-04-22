@@ -12,21 +12,39 @@
     </head>
     
     <body>
-        <form id="appointment_form" method="POST" action="js/edit_appointment.js">
-            <input type="text" placeholder="First Name" id="first_name" disabled />
-            <input type="text" placeholder="Last Name" id="last_name" disabled />
-            <input type="email" placeholder="Phone Number" id="phone_no" disabled />
-            
-            <label for="date">Appointment Date: </label>
-            <input type="date" id="date" required />
-            
-            <label for="date">Appointment Time: </label>
-            <input type="time" id="time" required />
-            
-            
-            <input type="button" id="edit_appointment" class="btn btn-primary" value="Edit Appointment"/>
-            <input type="button" id="delete_appointment" class="btn btn-danger" value="Delete Appointment">
-        </form>
+        
+        <div class="container min-vh-100 pt-3">
+            <div class="d-flex justify-content-center">
+                <form method="POST" action="js/edit_appointment.js">
+                    <div class="col">
+                        <input type="text" placeholder="First Name" id="first_name" disabled />
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <input type="text" placeholder="Last Name" id="last_name" disabled />
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <input type="text" placeholder="Phone Number" id="phone_no" disabled />
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <label for="date">Appointment Date: </label>
+                        <input type="date" id="date" required />                    
+                    </div>
+                    
+                    <div class="col pt-2">
+                        <label for="date">Appointment Time: </label>
+                        <input type="time" id="time" required />                   
+                    </div>
+
+                    <div class="col pt-4">
+                        <input type="button" id="edit_appointment" class="btn btn-primary" value="Edit Appointment"/>
+                        <input type="button" id="delete_appointment" class="btn btn-danger" value="Delete Appointment">
+                    </div>
+                </form>
+            </div>
+        </div>
         
             <!-- Initialize Firebase Scripts -->
         <script src="/__/firebase/8.2.10/firebase-app.js"></script>
